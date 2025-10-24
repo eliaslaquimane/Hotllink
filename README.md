@@ -1,4 +1,4 @@
-# HotlLink — Travel Platform (MVP)
+# HotlLink — Travel Platform
 
 A minimal, modern travel platform built with React, Vite and Tailwind CSS. This repository contains the HotlLink for exploring hotels, planners and travel-related services with internationalization support.
 
