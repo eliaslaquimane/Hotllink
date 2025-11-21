@@ -210,6 +210,31 @@ If ports 5000 or 5173 are in use, you can change them:
 - Backend: Update `PORT` in `.env`
 - Frontend: Vite will prompt for an alternative port
 
+## 🚀 Deployment
+
+Ready to deploy to production? Check out our comprehensive [Deployment Guide](DEPLOYMENT.md) which covers:
+
+- **MongoDB Atlas** setup (free cloud database)
+- **Render** deployment for backend (free tier)
+- **Vercel** deployment for frontend (free tier)
+- Environment variables configuration
+- Custom domain setup
+- Troubleshooting and monitoring
+
+**Quick Links:**
+- [MongoDB Atlas Setup](DEPLOYMENT.md#part-1-setup-mongodb-atlas)
+- [Backend Deployment](DEPLOYMENT.md#part-2-deploy-backend-to-render)
+- [Frontend Deployment](DEPLOYMENT.md#part-3-deploy-frontend-to-vercel)
+- [Troubleshooting](DEPLOYMENT.md#-troubleshooting)
+
+### Deployment Architecture
+
+```
+User Browser → Vercel (Frontend) → Render (Backend) → MongoDB Atlas (Database)
+```
+
+All services offer generous free tiers suitable for development and production!
+
 ## 📝 Future Enhancements
 
 - [ ] Password hashing with bcrypt
