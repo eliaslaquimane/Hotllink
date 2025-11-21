@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, MapPin, User, Globe } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, MapPin, User, Globe, LogOut } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [language, setLanguage] = useState('pt');
   const location = useLocation();
+  const { isAuthenticated, logout, user } = useAuth();
+  const navigate = useNavigate();
 
   const navigation = [
     { name: 'Início', href: '/' },
@@ -22,6 +25,11 @@ const Navbar = () => {
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLanguage(e.target.value);
     // Aqui você pode integrar com i18n ou atualizar textos conforme o idioma
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
   return (
@@ -45,22 +53,48 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                  location.pathname === item.href
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${location.pathname === item.href
                     ? 'text-blue-600 bg-blue-50'
                     : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-                }`}
+                  }`}
               >
                 {item.name}
               </Link>
             ))}
-            <Link
-              to="/dashboard"
-              className="flex items-center space-x-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-200"
-            >
-              <User className="w-4 h-4" />
-              <span>Painel</span>
-            </Link>
+
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/dashboard"
+                  className="flex items-center space-x-1 text-gray-700 hover:text-blue-600"
+                >
+                  <User className="w-4 h-4" />
+                  <span>{user?.name}</span>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center space-x-1 text-red-600 hover:text-red-700"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Sair</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/login"
+                  className="text-gray-700 hover:text-blue-600 font-medium"
+                >
+                  Entrar
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-200 font-medium"
+                >
+                  Registar
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Botão do menu mobile */}
@@ -83,22 +117,52 @@ const Navbar = () => {
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    location.pathname === item.href
+                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${location.pathname === item.href
                       ? 'text-blue-600 bg-blue-50'
                       : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   {item.name}
                 </Link>
               ))}
-              <Link
-                to="/dashboard"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md text-base font-medium"
-              >
-                Painel
-              </Link>
+
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  >
+                    Painel ({user?.name})
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                    className="block w-full text-left px-3 py-2 text-red-600 hover:text-red-700 font-medium"
+                  >
+                    Sair
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  >
+                    Entrar
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md text-base font-medium"
+                  >
+                    Registar
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

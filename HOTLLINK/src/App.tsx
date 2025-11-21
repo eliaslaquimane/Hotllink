@@ -10,28 +10,42 @@ import CarRental from './pages/CarRental';
 import Translators from './pages/Translators';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import HotelDetails from './pages/HotelDetails';
+import Booking from './pages/Booking';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <Router basename={"/hotllink-test-mvp/"}>
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/hotels" element={<Hotels />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/trip-planner" element={<TripPlanner />} />
-            <Route path="/city-guide" element={<CityGuide />} />
-            <Route path="/car-rental" element={<CarRental />} />
-            <Route path="/translators" element={<Translators />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router basename={"/hotllink-test-mvp/"}>
+        <div className="min-h-screen bg-gray-50">
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/hotels/:id" element={<HotelDetails />} />
+
+              {/* Protected Routes */}
+              <Route path="/hotels" element={<ProtectedRoute><Hotels /></ProtectedRoute>} />
+              <Route path="/hotels/:id/book" element={<ProtectedRoute><Booking /></ProtectedRoute>} />
+              <Route path="/services" element={<ProtectedRoute><Services /></ProtectedRoute>} />
+              <Route path="/trip-planner" element={<ProtectedRoute><TripPlanner /></ProtectedRoute>} />
+              <Route path="/city-guide" element={<ProtectedRoute><CityGuide /></ProtectedRoute>} />
+              <Route path="/car-rental" element={<ProtectedRoute><CarRental /></ProtectedRoute>} />
+              <Route path="/translators" element={<ProtectedRoute><Translators /></ProtectedRoute>} />
+              <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
