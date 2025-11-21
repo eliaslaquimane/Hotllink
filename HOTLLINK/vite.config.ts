@@ -7,5 +7,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  base: '/hotllink-test-mvp/', // Set the base path for the application
+  base: '/', // Use root path for production deployment
 });
