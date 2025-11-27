@@ -20,7 +20,7 @@ import { AuthProvider } from './context/AuthContext';
 function App() {
   return (
     <AuthProvider>
-      <Router basename={"/hotllink-test-mvp/"}>
+      <Router>
         <div className="min-h-screen bg-gray-50">
           <Navbar />
           <main>
