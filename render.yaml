@@ -3,6 +3,7 @@ services:
     name: hotllink-backend
     runtime: node
     rootDir: backend-hotllink
+    dockerfilePath: ./Dockerfile
     buildCommand: npm install
     startCommand: npm start
     envVars:
