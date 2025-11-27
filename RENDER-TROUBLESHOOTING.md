@@ -93,6 +93,15 @@ mongodb+srv://laquimane:ELIAS123@hotllink-cluster.on0c0uy.mongodb.net/hotllink_d
 3. Authorize Render to access your repositories
 4. Try creating web service again
 
+### Error: "failed to read dockerfile: ... is a directory"
+**Cause**: Render trying to use directory as Dockerfile, or Dockerfile has incorrect paths
+
+**Solution**:
+1. Ensure `render.yaml` has `dockerfilePath: ./Dockerfile` specified
+2. If using `rootDir`, ensure Dockerfile COPY commands use relative paths (e.g., `COPY package*.json ./` not `COPY backend-hotllink/package*.json ./`)
+3. Commit and push changes
+4. Redeploy on Render
+
 ---
 
 ## 🧪 Verification Steps
